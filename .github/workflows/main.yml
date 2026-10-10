@@ -32,11 +32,9 @@ jobs:
 
     - name: Force Override Hardcoded Java Home
       run: |
-        # This deletes the developer's broken java.home rule if it exists in gradle.properties
         if [ -f gradle.properties ]; then
           sed -i '/org.gradle.java.home/d' gradle.properties
         fi
-        # This forces Gradle to use the correct GitHub Action Java path
         echo "org.gradle.java.home=${{ steps.setup-java.outputs.path }}" >> gradle.properties
 
     - name: Make Gradle Executable
@@ -49,4 +47,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: GZDoom-Android-2026-APK
-        path: app/build/outputs/apk
+        path: "**/build/outputs/apk/**/*.apk"
